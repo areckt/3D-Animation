@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Stats from 'stats-js';
 
 const NUM_OF_COLS = 65;
-const NUM_OF_BOXES = NUM_OF_COLS * NUM_OF_COLS;
+const NUM_OF_SPHERES = NUM_OF_COLS * NUM_OF_COLS;
 
 let scene, camera, renderer, spheres, controls, stats;
 let counter = 0;
@@ -50,7 +50,7 @@ function init() {
   let pos_x = init_x;
   let init_y = -init_x;
   let pos_y = init_y;
-  for (let i = 0; i < NUM_OF_BOXES; i++) {
+  for (let i = 0; i < NUM_OF_SPHERES; i++) {
     let sphereColor = new THREE.Color(
       'hsl(' + Math.random() * 360 + ', 100%, 60%)'
     );
@@ -72,7 +72,7 @@ function init() {
     }
   }
   // Add the Spheres to the scene
-  for (let i = 0; i < NUM_OF_BOXES; i++) {
+  for (let i = 0; i < NUM_OF_SPHERES; i++) {
     scene.add(spheres[i]);
   }
 
@@ -105,7 +105,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   counter += 0.05;
-  for (let i = 0; i < NUM_OF_BOXES; i++) {
+  for (let i = 0; i < NUM_OF_SPHERES; i++) {
     spheres[i].position.x += 0.03 * Math.sin(counter + i);
     spheres[i].position.y += 0.03 * Math.cos(counter - i);
     spheres[i].position.z += 0.1 * Math.sin(counter + i);
