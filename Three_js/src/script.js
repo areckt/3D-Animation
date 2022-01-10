@@ -52,7 +52,9 @@ function init() {
   let pos_y = init_y;
   for (let i = 0; i < NUM_OF_SPHERES; i++) {
     let sphereColor = new THREE.Color(
-      'hsl(' + Math.random() * 360 + ', 100%, 60%)'
+      `rgb(${Math.round(Math.random() * 256)}, ${Math.round(
+        Math.random() * 256
+      )}, ${Math.round(Math.random() * 256)})`
     );
     let sphereMaterial = new THREE.MeshPhongMaterial({
       color: sphereColor,
@@ -62,7 +64,8 @@ function init() {
     let sphereGeometry = new THREE.SphereGeometry(sphereSize, 32, 16);
     let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
-    sphere.position.set(pos_x, pos_y, i % 3);
+    // positionSphere(sphere, pos_x, pos_y, i);
+    positionSphere2(sphere);
     spheres.push(sphere);
 
     pos_x += 2;
@@ -81,6 +84,18 @@ function init() {
     stats = createStats();
     document.body.appendChild(stats.domElement);
   }, 1000);
+}
+
+function positionSphere(sphere, posX, posY, iter) {
+  sphere.position.set(posX, posY, iter % 3);
+}
+
+function positionSphere2(sphere) {
+  sphere.position.set(
+    Math.random() * NUM_OF_COLS - NUM_OF_COLS / 2,
+    Math.random() * NUM_OF_COLS - NUM_OF_COLS / 2,
+    Math.random() * NUM_OF_COLS - NUM_OF_COLS / 2
+  );
 }
 
 function handleResize() {
