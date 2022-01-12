@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Stats from 'stats-js';
 
-const NUM_OF_COLS = 65;
+const NUM_OF_COLS = 25;
 const NUM_OF_SPHERES = NUM_OF_COLS * NUM_OF_COLS;
 
 let scene, camera, renderer, spheres, controls, stats;
@@ -111,7 +111,7 @@ function createStats() {
 
   stats.domElement.style.position = 'absolute';
   stats.domElement.style.left = '0';
-  stats.domElement.style.top = '0';
+  stats.domElement.style.top = '250px';
 
   return stats;
 }
