@@ -2,10 +2,10 @@ import './style.css';
 import * as BABYLON from 'babylonjs';
 import Stats from 'stats-js';
 
-const NUM_OF_COLS = 25;
-const NUM_OF_SPHERES = NUM_OF_COLS * NUM_OF_COLS;
+const NUM_OF_SPHERES = 1000;
+const NUM_OF_COLS = Math.ceil(Math.sqrt(NUM_OF_SPHERES));
 
-let scene, camera, engine, spheres, controls, stats;
+let scene, camera, engine, spheres, stats;
 let counter = 0;
 
 function init() {
@@ -44,10 +44,6 @@ function init() {
 
   // Create the Spheres
   spheres = [];
-  let init_x = -(NUM_OF_COLS - 1);
-  let pos_x = init_x;
-  let init_y = -init_x;
-  let pos_y = init_y;
   for (let i = 0; i < NUM_OF_SPHERES; i++) {
     let sphereSize = Math.random() * (0.8 - 0.5) + 0.5;
     let sphere = BABYLON.MeshBuilder.CreateSphere(
@@ -65,23 +61,12 @@ function init() {
     );
 
     sphere.material = sphereMaterial;
-    // positionSphere(sphere, pos_x, pos_y, i);
-    positionSphere2(sphere);
+    positionSphere(sphere);
 
     spheres.push(sphere);
-
-    pos_x += 2;
-    if (pos_x == -init_x + 2) {
-      pos_x = init_x;
-      pos_y -= 2;
-    }
   }
 
-  function positionSphere(sphere, posX, posY, iter) {
-    sphere.position = new BABYLON.Vector3(posX, posY, iter % 3);
-  }
-
-  function positionSphere2(sphere) {
+  function positionSphere(sphere) {
     sphere.position.x = BABYLON.Scalar.RandomRange(
       -NUM_OF_COLS / 2,
       NUM_OF_COLS / 2
@@ -100,7 +85,7 @@ function init() {
   setTimeout(() => {
     stats = createStats();
     document.body.appendChild(stats.domElement);
-  }, 1000);
+  }, 2000);
 }
 
 function handleResize() {
@@ -117,20 +102,16 @@ function createStats() {
 
   return stats;
 }
-let temp = 0;
+
 function animate() {
   engine.runRenderLoop(function () {
     counter += 0.05;
-    temp++;
     for (let i = 0; i < NUM_OF_SPHERES; i++) {
       spheres[i].position.x += 0.03 * Math.sin(counter + i);
       spheres[i].position.y += 0.03 * Math.cos(counter - i);
       spheres[i].position.z += 0.1 * Math.sin(counter + i);
     }
     scene.render();
-    if (temp % 60 == 0) {
-      // console.log(camera);
-    }
 
     if (stats) stats.update();
   });
